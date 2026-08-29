@@ -1,0 +1,34 @@
+[package]
+name = "jive-filesystem"
+description = "Catalogs the music jive plays, and stores the events recorded against it."
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[features]
+# Builders for music directories and collection files, for use in tests. A
+# feature cannot enable a dev-dependency, so `tempfile` is an optional normal
+# dependency, pulled in only when this is on. No stability guarantee.
+testing = ["dep:tempfile"]
+
+[dependencies]
+jive-core = { workspace = true, features = ["serde"] }
+dirs = "6.0"
+serde.workspace = true
+serde_json.workspace = true
+thiserror.workspace = true
+tempfile = { version = "3.10", optional = true }
+walkdir = "2.5"
+
+[dev-dependencies]
+# This crate's own tests use the builders the feature exports.
+jive-filesystem = { path = ".", features = ["testing"] }
+
+[lints]
+workspace = true

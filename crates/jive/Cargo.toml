@@ -1,0 +1,47 @@
+[package]
+name = "jive"
+description = "A terminal music player whose shuffle learns from the only button it has."
+default-run = "jive"
+version.workspace = true
+edition.workspace = true
+rust-version.workspace = true
+license.workspace = true
+repository.workspace = true
+readme.workspace = true
+authors.workspace = true
+keywords.workspace = true
+categories.workspace = true
+
+[lib]
+name = "jive"
+path = "src/lib.rs"
+
+[[bin]]
+name = "jive"
+path = "src/main.rs"
+
+[[bin]]
+name = "jive-debug"
+path = "src/bin/jive-debug.rs"
+
+[dependencies]
+jive-core = { workspace = true, features = ["serde"] }
+jive-filesystem.workspace = true
+jive-mpv.workspace = true
+crossterm = "0.29"
+ratatui = "0.30"
+thiserror.workspace = true
+unicode-width = "0.2"
+# Xoshiro256PlusPlus only: the default features add chacha20 and getrandom for
+# StdRng and the thread RNG, neither of which a shuffle needs.
+rand = { version = "0.10", default-features = false, features = ["std"] }
+
+# jive sits at the top of the graph: nothing depends on it, so it publishes no
+# `testing` feature. Its builders live in `src/testing.rs` behind
+# `#[cfg(test)]`. The music directories they stand on come from jive-filesystem.
+[dev-dependencies]
+jive-filesystem = { workspace = true, features = ["testing"] }
+tempfile = "3.10"
+
+[lints]
+workspace = true

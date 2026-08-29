@@ -1,0 +1,39 @@
+[workspace]
+resolver = "3"
+members = [
+    "crates/jive-core",
+    "crates/jive-filesystem",
+    "crates/jive-mpv",
+    "crates/jive",
+]
+
+[workspace.package]
+version = "0.1.0"
+edition = "2024"
+rust-version = "1.88"
+license = "MIT"
+authors = ["The jive authors"]
+repository = "https://github.com/cazeth/jive"
+readme = "README.md"
+keywords = ["music", "player", "cli", "shuffle"]
+categories = ["command-line-utilities", "multimedia::audio"]
+
+[workspace.lints.rust]
+unsafe_code = "forbid"
+missing_docs = "warn"
+
+[workspace.lints.clippy]
+pedantic = { level = "warn", priority = -1 }
+module_name_repetitions = "allow"
+
+[workspace.dependencies]
+jive-core = { path = "crates/jive-core", version = "0.1.0" }
+jive-filesystem = { path = "crates/jive-filesystem", version = "0.1.0" }
+jive-mpv = { path = "crates/jive-mpv", version = "0.1.0" }
+serde = { version = "1.0.197", features = ["derive"] }
+serde_json = "1.0.114"
+thiserror = "2.0.0"
+
+[profile.release]
+lto = "thin"
+strip = true
